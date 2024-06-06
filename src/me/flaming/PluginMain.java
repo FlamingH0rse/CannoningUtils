@@ -25,12 +25,12 @@ public class PluginMain extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityExplodeListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
 
-        getLogger().info("Plugin Is Enabled");
+        getLogger().info("CannoningUtils is enabled");
     }
 
     @Override
     public void onDisable() {
-        getLogger().info("Plugin Disabled");
+        getLogger().info("CannoningUtils is disabled");
     }
 
     public static PluginMain getPlugin() {

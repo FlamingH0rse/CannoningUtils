@@ -25,6 +25,13 @@ public class NBTEditor {
             itemData.set(new NamespacedKey(main, key), PersistentDataType.DOUBLE, (double) value);
         }
     }
+    public Object getData (ItemStack item, String key, PersistentDataType type) {
+        if (!item.hasItemMeta() || item.getItemMeta() == null) return null;
+
+        ItemMeta itemMeta = item.getItemMeta();
+        PersistentDataContainer itemData = itemMeta.getPersistentDataContainer();
+        return itemData.get(new NamespacedKey(main, key), type);
+    }
     public void rename (ItemStack item, String name) {
         if (!item.hasItemMeta() || item.getItemMeta() == null) return;
         ItemMeta itemMeta = item.getItemMeta();

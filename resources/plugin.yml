@@ -1,0 +1,24 @@
+name: CannoningUtils
+version: '${project.version}'
+main: me.flaming.PluginMain
+api-version: 1.20
+authors: [FlamingH0rse]
+commands:
+  pluginhelp:
+    description: help command
+    usage: /pluginhelp
+  tntfill:
+    description: TNT Fill command
+    usage: /tntfill <radius> <amount>
+  tntclear:
+    description: TNT Clear command
+    usage: /tntclear <radius>
+  button:
+    description: Fire command
+    usage: /button
+    aliases:
+      - fire
+  lever:
+    description: Lever command
+    usage: /lever
+

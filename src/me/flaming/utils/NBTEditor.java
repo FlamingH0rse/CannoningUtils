@@ -24,6 +24,8 @@ public class NBTEditor {
         if (value instanceof Double) {
             itemData.set(new NamespacedKey(main, key), PersistentDataType.DOUBLE, (double) value);
         }
+
+        item.setItemMeta(itemMeta);
     }
     public Object getData (ItemStack item, String key, PersistentDataType type) {
         if (!item.hasItemMeta() || item.getItemMeta() == null) return null;

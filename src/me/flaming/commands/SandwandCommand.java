@@ -4,6 +4,7 @@ import me.flaming.PluginMain;
 import me.flaming.utils.ColorUtils;
 import me.flaming.utils.NBTEditor;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Dispenser;
@@ -16,6 +17,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +39,13 @@ public class SandwandCommand implements TabExecutor {
         // Sandwand Item
         ItemStack sandWandItem = new ItemStack(Material.BONE, 1);
         ItemMeta sandWandItemMeta = sandWandItem.getItemMeta();
+        PersistentDataContainer itemData = sandWandItemMeta.getPersistentDataContainer();
+
         sandWandItemMeta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
         sandWandItemMeta.setDisplayName(ColorUtils.getColored("&e&l&oSAND WAND"));
+//        itemData.set(new NamespacedKey(main, "custom-item-name"), PersistentDataType.STRING, "sand-wand");
         sandWandItem.setItemMeta(sandWandItemMeta);
+
         nbtEditor.setData(sandWandItem, "custom-item-name", "sand-wand");
 
         // Add item to inventory

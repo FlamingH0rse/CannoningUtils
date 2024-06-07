@@ -21,4 +21,9 @@ commands:
   lever:
     description: Lever command
     usage: /lever
+  sandwand:
+    description: Sand wand command
+    usage: /sandwand
+    aliases:
+      - bone
 

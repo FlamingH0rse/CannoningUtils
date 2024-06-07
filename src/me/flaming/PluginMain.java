@@ -1,9 +1,6 @@
 package me.flaming;
 
-import me.flaming.commands.ButtonCommand;
-import me.flaming.commands.LeverCommand;
-import me.flaming.commands.TntClearCommand;
-import me.flaming.commands.TntFillCommand;
+import me.flaming.commands.*;
 import me.flaming.events.EntityExplodeListener;
 import me.flaming.events.PlayerInteractListener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,6 +17,7 @@ public class PluginMain extends JavaPlugin {
         getCommand("tntclear").setExecutor(new TntClearCommand(this));
         getCommand("button").setExecutor(new ButtonCommand(this));
         getCommand("lever").setExecutor(new LeverCommand(this));
+        getCommand("sandwand").setExecutor(new SandwandCommand(this));
 
 
         getServer().getPluginManager().registerEvents(new EntityExplodeListener(this), this);

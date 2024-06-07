@@ -5,7 +5,6 @@ import me.flaming.utils.ColorUtils;
 import me.flaming.utils.NBTEditor;
 import me.flaming.utils.PlayerVar;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Piston;
@@ -15,24 +14,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.generator.WorldInfo;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PlayerInteractListener implements Listener {
     private PluginMain main;
-    private final ColorUtils color;
-    private final NBTEditor nbtEditor;
     public PlayerInteractListener(PluginMain main) {
         this.main = main;
-        color = new ColorUtils();
-        nbtEditor = new NBTEditor();
     }
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
@@ -69,7 +62,7 @@ public class PlayerInteractListener implements Listener {
                     }
                 }
                 if (sandCount > 0)
-                    color.send(p, "&eCleared " + sandCount + " blocks");
+                    ColorUtils.send(p, "&eCleared " + sandCount + " blocks");
                 return;
             }
 
@@ -110,7 +103,7 @@ public class PlayerInteractListener implements Listener {
 
                     // Send update
                     String tickMsg = getTickMessage(tickCount, priority);
-                    color.send(p, "&aTick count: " + tickMsg);
+                    ColorUtils.send(p, "&aTick count: " + tickMsg);
 
                 }
                 else if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
@@ -119,7 +112,7 @@ public class PlayerInteractListener implements Listener {
                     PlayerVar.set(p, "r-priority", false);
 
                     // Send update
-                    color.send(p, "&aReset tick counter");
+                    ColorUtils.send(p, "&aReset tick counter");
                 }
             }
         }

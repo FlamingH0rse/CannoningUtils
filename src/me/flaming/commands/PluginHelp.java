@@ -12,10 +12,8 @@ import java.util.List;
 
 public class PluginHelp implements TabExecutor {
     private final PluginMain main;
-    private final ColorUtils color;
     public PluginHelp (PluginMain main) {
         this.main = main;
-        color = new ColorUtils();
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
@@ -32,7 +30,7 @@ public class PluginHelp implements TabExecutor {
                 &6===================================
                 """;
 
-        color.send(p, m);
+        ColorUtils.send(p, m);
 
         return true;
     }

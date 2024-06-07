@@ -1,14 +1,14 @@
 package me.flaming.utils;
 
-import me.flaming.PluginMain;
+import me.flaming.misc.UtilClass;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-public class PlayerVar {
+public class PlayerVar extends UtilClass {
     public static <T, Z> void set(Player player, String key, PersistentDataType<T, Z> type, Z value) {
-        NamespacedKey namespacedKey = new NamespacedKey(PluginMain.getPlugin(), key);
+        NamespacedKey namespacedKey = new NamespacedKey(main, key);
         PersistentDataContainer dataContainer = player.getPersistentDataContainer();
         dataContainer.set(namespacedKey, type, value);
     }
@@ -42,7 +42,7 @@ public class PlayerVar {
     }
 
     public static <T, Z> Z get(Player player, String key, PersistentDataType<T, Z> type, Z defaultValue) {
-        NamespacedKey namespacedKey = new NamespacedKey(PluginMain.getPlugin(), key);
+        NamespacedKey namespacedKey = new NamespacedKey(main, key);
         PersistentDataContainer dataContainer = player.getPersistentDataContainer();
         return dataContainer.getOrDefault(namespacedKey, type, defaultValue);
     }

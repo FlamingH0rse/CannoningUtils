@@ -1,6 +1,6 @@
 package me.flaming.utils;
 
-import me.flaming.PluginMain;
+import me.flaming.misc.UtilClass;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -10,8 +10,8 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
 
-public class NBTEditor {
-    public static PluginMain main = PluginMain.getPlugin();
+public class NBTEditor extends UtilClass {
+
 
     public static void rename (ItemStack item, String name) {
         ItemMeta itemMeta = item.getItemMeta();

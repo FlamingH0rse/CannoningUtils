@@ -20,10 +20,8 @@ import java.util.List;
 
 public class ButtonCommand implements TabExecutor {
     private final PluginMain main;
-    private final ColorUtils color;
     public ButtonCommand(PluginMain main) {
         this.main = main;
-        color = new ColorUtils();
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -34,14 +32,14 @@ public class ButtonCommand implements TabExecutor {
 
         // Check if previous button data exists
         if (coords.length == 0) {
-            color.send(p, "&cNo button history found.");
+            ColorUtils.send(p, "&cNo button history found.");
             return true;
         }
 
         // Check if button block exists at the co-ordinates
         Block block = world.getBlockAt(coords[0], coords[1], coords[2]);
         if (block.getType() == Material.LEVER || !(block.getBlockData() instanceof Switch)) {
-            color.send(p, "&cThe clicked button was removed.");
+            ColorUtils.send(p, "&cThe clicked button was removed.");
             return true;
         }
 
@@ -59,7 +57,7 @@ public class ButtonCommand implements TabExecutor {
             }
         }.runTaskLater(main, ticksPressed);
 
-        color.send(p, "&aFired!");
+        ColorUtils.send(p, "&aFired!");
         return true;
     }
 

@@ -18,10 +18,8 @@ import java.util.List;
 
 public class LeverCommand implements TabExecutor {
     private final PluginMain main;
-    private final ColorUtils color;
     public LeverCommand(PluginMain main) {
         this.main = main;
-        color = new ColorUtils();
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -32,14 +30,14 @@ public class LeverCommand implements TabExecutor {
 
         // Check if previous lever data exists
         if (coords.length == 0) {
-            color.send(p, "&cNo lever history found.");
+            ColorUtils.send(p, "&cNo lever history found.");
             return true;
         }
 
         // Check if lever block exists at the co-ordinates
         Block block = world.getBlockAt(coords[0], coords[1], coords[2]);
         if (block.getType() != Material.LEVER) {
-            color.send(p, "&cThe flicked lever was removed.");
+            ColorUtils.send(p, "&cThe flicked lever was removed.");
             return true;
         }
 
@@ -48,7 +46,7 @@ public class LeverCommand implements TabExecutor {
         data.setPowered(!data.isPowered());
         block.setBlockData(data);
 
-        color.send(p, "&aLever switched!");
+        ColorUtils.send(p, "&aLever switched!");
         return true;
     }
 

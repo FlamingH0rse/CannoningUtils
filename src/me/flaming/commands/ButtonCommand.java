@@ -49,15 +49,13 @@ public class ButtonCommand implements TabExecutor {
         int ticksPressed = (block.getType() == Material.STONE_BUTTON) ? 20 : 30;
 
         Powerable data = (Powerable) block.getBlockData();
-        data.setPowered(!data.isPowered());
-        block.setBlockData(data);
+        data.setPowered(true); block.setBlockData(data);
 
         // Un-click button
         new BukkitRunnable() {
             @Override
             public void run() {
-                data.setPowered(!data.isPowered());
-                block.setBlockData(data);
+                data.setPowered(false); block.setBlockData(data);
             }
         }.runTaskLater(main, ticksPressed);
 

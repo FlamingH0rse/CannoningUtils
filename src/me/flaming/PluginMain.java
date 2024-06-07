@@ -20,7 +20,7 @@ public class PluginMain extends JavaPlugin {
         getCommand("sandwand").setExecutor(new SandwandCommand(this));
         getCommand("tickcounter").setExecutor(new TickCounterCommand(this));
 
-        getCommand("pluginhelp").setExecutor(new PluginHelp());
+        getCommand("pluginhelp").setExecutor(new PluginHelp(this));
 
         getServer().getPluginManager().registerEvents(new EntityExplodeListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);

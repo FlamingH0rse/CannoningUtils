@@ -1,6 +1,7 @@
 package me.flaming.events;
 
 import me.flaming.PluginMain;
+import me.flaming.utils.ColorUtils;
 import me.flaming.utils.NBTEditor;
 import me.flaming.utils.PlayerVar;
 import org.bukkit.Material;
@@ -24,9 +25,11 @@ import java.util.*;
 
 public class PlayerInteractListener implements Listener {
     private PluginMain main;
+    private final ColorUtils color;
     private final NBTEditor nbtEditor;
     public PlayerInteractListener(PluginMain main) {
         this.main = main;
+        color = new ColorUtils();
         nbtEditor = new NBTEditor();
     }
     @EventHandler
@@ -42,13 +45,14 @@ public class PlayerInteractListener implements Listener {
         if (handItem != null) {
             Object customItemName = nbtEditor.getData(handItem, "custom-item-name", PersistentDataType.STRING);
 
-            e.setCancelled(true);
 
             // Sand wand
             if (Objects.equals(customItemName, "sand-wand")) {
+                e.setCancelled(true);
                 Block targetBlock = e.getPlayer().getTargetBlock(null,100);
 
-                // Iterate over the whole block column targeted
+                // Iterate over the whole block column targeted till bottom
+                int sandCount = 0;
                 for (int y = world.getMinHeight(); y < world.getMaxHeight(); y++) {
                     int targetX = targetBlock.getX();
                     int targetZ = targetBlock.getZ();
@@ -60,13 +64,17 @@ public class PlayerInteractListener implements Listener {
 
                     if (gravityBlocks.contains(currentBlock.getType())) {
                         currentBlock.setType(Material.AIR);
+                        sandCount++;
                     }
                 }
+                if (sandCount > 0)
+                    color.send(p, "&eCleared " + sandCount + " blocks");
+                return;
             }
 
             // Tick counter
             if (Objects.equals(customItemName, "tick-counter")) {
-
+                e.setCancelled(true);
             }
         }
 

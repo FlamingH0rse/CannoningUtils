@@ -30,10 +30,10 @@ public class ButtonCommand implements TabExecutor {
         Player p = (Player) sender;
         World world = p.getWorld();
 
-        int[] coords = (int[]) PlayerVar.getVar(p, "button-loc", PersistentDataType.INTEGER_ARRAY);
+        int[] coords = PlayerVar.get(p, "button-loc", PersistentDataType.INTEGER_ARRAY, new int[]{});
 
         // Check if previous button data exists
-        if (coords == null) {
+        if (coords.length == 0) {
             color.send(p, "&cNo button history found.");
             return true;
         }

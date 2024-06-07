@@ -88,11 +88,8 @@ public class PlayerInteractListener implements Listener {
 
                 if (e.getAction() == Action.RIGHT_CLICK_BLOCK && block != null && tickableItems.contains(block.getType())) {
                     // Get tick counter
-                    Object tickCountObject = PlayerVar.getVar(p, "r-tick-count", PersistentDataType.DOUBLE);
-                    double tickCount = tickCountObject == null? 0.0d : (double) tickCountObject;
-
-                    Object priorityObject = PlayerVar.getVar(p, "r-priority", PersistentDataType.BOOLEAN);
-                    boolean priority = priorityObject == null? false : (boolean) priorityObject;
+                    double tickCount = PlayerVar.getDouble(p, "r-tick-count", 0.0d);
+                    boolean priority = PlayerVar.getBoolean(p, "r-priority", false);
 
 
                     // Check tick counter
@@ -109,10 +106,9 @@ public class PlayerInteractListener implements Listener {
                     if (block.getType() == Material.COMPARATOR) priority = true;
 
                     // Update player variables
-                    PlayerVar.setVar(p, "r-tick-count", PersistentDataType.DOUBLE, tickCount);
-                    PlayerVar.setVar(p, "r-priority", PersistentDataType.BOOLEAN, priority);
+                    PlayerVar.set(p, "r-tick-count", tickCount);
+                    PlayerVar.set(p, "r-priority", priority);
 
-                    main.getLogger().info(PlayerVar.getVar(p, "r-tick-count", PersistentDataType.DOUBLE)  + "");
                     // Send update
                     String tickMsg = getTickMessage(tickCount, priority);
                     color.send(p, "&aTick count: " + tickMsg);
@@ -120,8 +116,8 @@ public class PlayerInteractListener implements Listener {
                 }
                 else if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
                     // Reset tick counter
-                    PlayerVar.setVar(p, "r-tick-count", PersistentDataType.DOUBLE, 0.0d);
-                    PlayerVar.setVar(p, "r-priority", PersistentDataType.BOOLEAN, false);
+                    PlayerVar.set(p, "r-tick-count", 0.0d);
+                    PlayerVar.set(p, "r-priority", false);
 
                     // Send update
                     color.send(p, "&aReset tick counter");
@@ -133,11 +129,13 @@ public class PlayerInteractListener implements Listener {
         if (block != null && e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             // Save lever location
             if (block.getType() == Material.LEVER) {
-                PlayerVar.setVar(e.getPlayer(), "lever-loc", PersistentDataType.INTEGER_ARRAY, new int[]{block.getX(), block.getY(), block.getZ()});
+                int[] coords = new int[]{block.getX(), block.getY(), block.getZ()};
+                PlayerVar.set(p, "lever-loc", PersistentDataType.INTEGER_ARRAY, coords);
             }
             // Save button location
             else if (block.getBlockData() instanceof Switch) {
-                PlayerVar.setVar(e.getPlayer(), "button-loc", PersistentDataType.INTEGER_ARRAY, new int[]{block.getX(), block.getY(), block.getZ()});
+                int[] coords = new int[]{block.getX(), block.getY(), block.getZ()};
+                PlayerVar.set(p, "button-loc", PersistentDataType.INTEGER_ARRAY, coords);
             }
         }
     }

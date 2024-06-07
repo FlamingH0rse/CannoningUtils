@@ -28,10 +28,10 @@ public class LeverCommand implements TabExecutor {
         Player p = (Player) sender;
         World world = p.getWorld();
 
-        int[] coords = (int[]) PlayerVar.getVar(p, "lever-loc", PersistentDataType.INTEGER_ARRAY);
+        int[] coords = PlayerVar.get(p, "lever-loc", PersistentDataType.INTEGER_ARRAY, new int[]{});
 
         // Check if previous lever data exists
-        if (coords == null) {
+        if (coords.length == 0) {
             color.send(p, "&cNo lever history found.");
             return true;
         }

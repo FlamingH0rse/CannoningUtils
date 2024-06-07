@@ -33,14 +33,15 @@ public class TntClearCommand implements TabExecutor {
         // Parse radius argument
         int radius;
         try {
-            radius = Integer.parseInt(args[0]);
+            if (args.length == 0) radius = 64; // Default radius
+            else radius = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
             p.sendMessage("Enter a valid radius between 1 to 64");
-            return false;
+            return true;
         }
         if (radius < 1 || radius > 64) {
             p.sendMessage("Enter a valid radius between 1 to 64");
-            return false;
+            return true;
         }
 
         // Get dispenser locations
@@ -55,6 +56,12 @@ public class TntClearCommand implements TabExecutor {
             }
         }
 
+        // No dispensers found
+        if (dispenserBlocks.size() == 0) {
+            color.send(p, "&4Found no dispensers to clear");
+            return true;
+        }
+
         // Fill tnt
         for (Block block : dispenserBlocks) {
             Dispenser disp = (Dispenser) block.getState();
@@ -63,7 +70,7 @@ public class TntClearCommand implements TabExecutor {
             inv.clear();
         }
 
-        color.send(p, "&aSuccessfully cleared dispensers in radius of &6&l" + radius);
+        color.send(p, "&aCleared &6&l" + dispenserBlocks.size() + " &adispensers");
         return true;
     }
 

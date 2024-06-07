@@ -33,7 +33,8 @@ public class TntFillCommand implements TabExecutor {
         // Parse radius argument
         int radius;
         try {
-            radius = Integer.parseInt(args[0]);
+            if (args.length < 1) radius = 64; // Default radius
+            else radius = Integer.parseInt(args[0]);
         } catch (NumberFormatException e) {
             p.sendMessage("Enter a valid radius between 1 to 64");
             return false;
@@ -46,7 +47,8 @@ public class TntFillCommand implements TabExecutor {
         // Parse amount argument
         int amount;
         try {
-            amount = Integer.parseInt(args[1]);
+            if (args.length < 2) amount = 576; // Default amount
+            else amount = Integer.parseInt(args[1]);
         } catch (NumberFormatException e) {
             p.sendMessage("Enter a valid amount between 1 to 576");
             return false;
@@ -68,15 +70,21 @@ public class TntFillCommand implements TabExecutor {
             }
         }
 
+        if (dispenserBlocks.size() == 0) {
+            color.send(p, "&4Found no dispensers to fill");
+            return true;
+        }
         // Fill tnt
         for (Block block : dispenserBlocks) {
             Dispenser disp = (Dispenser) block.getState();
             Inventory inv = disp.getInventory();
 
-            inv.addItem(new ItemStack(Material.TNT, 64));
+            List<ItemStack> itemStacks = getStacks(Material.TNT, amount);
+
+            inv.addItem(itemStacks.toArray(ItemStack[]::new));
         }
 
-        color.send(p, "&aSuccessfully filled dispensers in radius of &6&l" + radius + " &awith &6&l" + amount + " &aTNT");
+        color.send(p, "&aFilled &6&l" + dispenserBlocks.size() + " &adispensers with &6&l" + amount + " &aTNT");
         return true;
     }
 
@@ -84,5 +92,20 @@ public class TntFillCommand implements TabExecutor {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> arguments = new ArrayList<>();
         return arguments;
+    }
+
+    public static List<ItemStack> getStacks (Material mat, int amount) {
+        List<ItemStack> list = new ArrayList<>();
+        ItemStack fullStack = new ItemStack(mat, 64);
+
+        int fullStackSize = amount/mat.getMaxStackSize();
+        int remStackSize = amount%mat.getMaxStackSize();
+
+        for (int i = 0; i < fullStackSize; i++) {
+            list.add(fullStack);
+        }
+        if (remStackSize != 0) list.add(new ItemStack(mat, remStackSize));
+
+        return list;
     }
 }

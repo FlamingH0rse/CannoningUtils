@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class EntityExplodeListener implements Listener {
-    private PluginMain main;
+    private final PluginMain main;
     public EntityExplodeListener(PluginMain main) {
         this.main = main;
     }
@@ -26,23 +27,18 @@ public class EntityExplodeListener implements Listener {
         Entity entity = e.getEntity();
         World world = entity.getWorld();
 
-        List<Block> blocks = e.blockList();
+        List<Block> affectedBlocks = e.blockList();
         e.setYield(0f);
 
-        List<Block> safeBlocks = new ArrayList<>();
-        for (Block block : blocks) {
-            for (int y = -64; y < 320; y++) {
-                Block currentBlock = world.getBlockAt(block.getX(), y, block.getZ());
-                if (currentBlock.getType() == Material.EMERALD_BLOCK) {
-                    safeBlocks.add(block);
-                    break;
-                }
+        // Remove the protected blocks from affected blocks
+        affectedBlocks.removeIf(b -> {
+            for (int y = world.getMinHeight(); y < world.getMaxHeight(); y++) {
+
+                Block currentBlock = world.getBlockAt(b.getX(), y, b.getZ());
+
+                if (currentBlock.getType() == Material.EMERALD_BLOCK) return true;
             }
-        }
-
-        for (Block safeBlock : safeBlocks) {
-            blocks.remove(safeBlock);
-        }
-
+            return false;
+        });
     }
 }

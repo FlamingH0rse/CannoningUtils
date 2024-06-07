@@ -38,13 +38,10 @@ public class SandwandCommand implements TabExecutor {
 
         // Sandwand Item
         ItemStack sandWandItem = new ItemStack(Material.BONE, 1);
-        ItemMeta sandWandItemMeta = sandWandItem.getItemMeta();
 
-        sandWandItemMeta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-        sandWandItemMeta.setDisplayName(ColorUtils.getColored("&e&l&oSAND WAND"));
-        sandWandItem.setItemMeta(sandWandItemMeta);
-
-        nbtEditor.setData(sandWandItem, "custom-item-name", "sand-wand");
+        NBTEditor.enchant(sandWandItem, Enchantment.ARROW_INFINITE, 1, true, true);
+        NBTEditor.rename(sandWandItem, "&e&l&oSAND WAND");
+        NBTEditor.set(sandWandItem, "custom-item-name", "sand-wand");
 
         // Add item to inventory
         p.getInventory().addItem(sandWandItem);

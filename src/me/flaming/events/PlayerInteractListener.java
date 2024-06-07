@@ -45,11 +45,10 @@ public class PlayerInteractListener implements Listener {
 
         // Sand wand and tick counter listener
         if (handItem != null) {
-            Object customItemName = nbtEditor.getData(handItem, "custom-item-name", PersistentDataType.STRING);
-
+            String customItemName = NBTEditor.getString(handItem, "custom-item-name", "");
 
             // Sand wand
-            if (Objects.equals(customItemName, "sand-wand")) {
+            if (customItemName.equals("sand-wand")) {
                 e.setCancelled(true);
                 Block targetBlock = e.getPlayer().getTargetBlock(null,100);
 
@@ -75,7 +74,7 @@ public class PlayerInteractListener implements Listener {
             }
 
             // Tick counter
-            if (Objects.equals(customItemName, "tick-counter")) {
+            if (customItemName.equals("tick-counter")) {
                 e.setCancelled(true);
                 List<Material> tickableItems = List.of(
                         Material.REPEATER,

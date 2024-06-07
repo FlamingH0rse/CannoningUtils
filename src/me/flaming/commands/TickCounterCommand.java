@@ -31,13 +31,10 @@ public class TickCounterCommand implements TabExecutor {
 
         // Tick-counter Item
         ItemStack TCItem = new ItemStack(Material.BLAZE_ROD, 1);
-        ItemMeta TCItemMeta = TCItem.getItemMeta();
 
-        TCItemMeta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-        TCItemMeta.setDisplayName(ColorUtils.getColored("&4&l&oTICK COUNTER"));
-        TCItem.setItemMeta(TCItemMeta);
-
-        nbtEditor.setData(TCItem, "custom-item-name", "tick-counter");
+        NBTEditor.enchant(TCItem, Enchantment.ARROW_INFINITE, 1, true, true);
+        NBTEditor.rename(TCItem, "&4&l&oTICK COUNTER");
+        NBTEditor.set(TCItem, "custom-item-name", "tick-counter");
 
         // Add item to inventory
         p.getInventory().addItem(TCItem);

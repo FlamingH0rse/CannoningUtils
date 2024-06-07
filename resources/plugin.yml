@@ -26,4 +26,9 @@ commands:
     usage: /sandwand
     aliases:
       - bone
+  tickcounter:
+    description: Tick counter command
+    usage: /tickcounter
+    aliases:
+      - tc
 

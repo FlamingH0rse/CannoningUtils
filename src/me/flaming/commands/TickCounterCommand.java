@@ -3,31 +3,24 @@ package me.flaming.commands;
 import me.flaming.PluginMain;
 import me.flaming.utils.ColorUtils;
 import me.flaming.utils.NBTEditor;
-import org.bukkit.Location;
-import org.bukkit.NamespacedKey;
-import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Dispenser;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.Material;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SandwandCommand implements TabExecutor {
+public class TickCounterCommand implements TabExecutor {
     private final PluginMain main;
     private final ColorUtils color;
     private final NBTEditor nbtEditor;
-    public SandwandCommand(PluginMain main) {
+    public TickCounterCommand(PluginMain main) {
         this.main = main;
         color = new ColorUtils();
         nbtEditor = new NBTEditor();
@@ -36,18 +29,18 @@ public class SandwandCommand implements TabExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
 
-        // Sandwand Item
-        ItemStack sandWandItem = new ItemStack(Material.BONE, 1);
-        ItemMeta sandWandItemMeta = sandWandItem.getItemMeta();
+        // Tick-counter Item
+        ItemStack TCItem = new ItemStack(Material.BLAZE_ROD, 1);
+        ItemMeta TCItemMeta = TCItem.getItemMeta();
 
-        sandWandItemMeta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
-        sandWandItemMeta.setDisplayName(ColorUtils.getColored("&e&l&oSAND WAND"));
-        sandWandItem.setItemMeta(sandWandItemMeta);
+        TCItemMeta.addEnchant(Enchantment.ARROW_INFINITE, 1, true);
+        TCItemMeta.setDisplayName(ColorUtils.getColored("&4&l&oTICK COUNTER"));
+        TCItem.setItemMeta(TCItemMeta);
 
-        nbtEditor.setData(sandWandItem, "custom-item-name", "sand-wand");
+        nbtEditor.setData(TCItem, "custom-item-name", "tick-counter");
 
         // Add item to inventory
-        p.getInventory().addItem(sandWandItem);
+        p.getInventory().addItem(TCItem);
         return true;
     }
 

@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Piston;
+import org.bukkit.block.data.type.Repeater;
 import org.bukkit.block.data.type.Switch;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -75,6 +77,55 @@ public class PlayerInteractListener implements Listener {
             // Tick counter
             if (Objects.equals(customItemName, "tick-counter")) {
                 e.setCancelled(true);
+                List<Material> tickableItems = List.of(
+                        Material.REPEATER,
+                        Material.COMPARATOR,
+                        Material.PISTON,
+                        Material.STICKY_PISTON,
+                        Material.REDSTONE_TORCH,
+                        Material.OBSERVER
+                );
+
+                if (e.getAction() == Action.RIGHT_CLICK_BLOCK && block != null && tickableItems.contains(block.getType())) {
+                    // Get tick counter
+                    Object tickCountObject = PlayerVar.getVar(p, "r-tick-count", PersistentDataType.DOUBLE);
+                    double tickCount = tickCountObject == null? 0.0d : (double) tickCountObject;
+
+                    Object priorityObject = PlayerVar.getVar(p, "r-priority", PersistentDataType.BOOLEAN);
+                    boolean priority = priorityObject == null? false : (boolean) priorityObject;
+
+
+                    // Check tick counter
+                    if (block.getType() == Material.REPEATER)
+                        tickCount += ((Repeater) block.getBlockData()).getDelay();
+
+                    else if (block.getBlockData() instanceof Piston)
+                        tickCount += 1.25;
+
+                    else
+                        tickCount++;
+
+                    // Check priority counter
+                    if (block.getType() == Material.COMPARATOR) priority = true;
+
+                    // Update player variables
+                    PlayerVar.setVar(p, "r-tick-count", PersistentDataType.DOUBLE, tickCount);
+                    PlayerVar.setVar(p, "r-priority", PersistentDataType.BOOLEAN, priority);
+
+                    main.getLogger().info(PlayerVar.getVar(p, "r-tick-count", PersistentDataType.DOUBLE)  + "");
+                    // Send update
+                    String tickMsg = getTickMessage(tickCount, priority);
+                    color.send(p, "&aTick count: " + tickMsg);
+
+                }
+                else if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
+                    // Reset tick counter
+                    PlayerVar.setVar(p, "r-tick-count", PersistentDataType.DOUBLE, 0.0d);
+                    PlayerVar.setVar(p, "r-priority", PersistentDataType.BOOLEAN, false);
+
+                    // Send update
+                    color.send(p, "&aReset tick counter");
+                }
             }
         }
 
@@ -89,5 +140,12 @@ public class PlayerInteractListener implements Listener {
                 PlayerVar.setVar(e.getPlayer(), "button-loc", PersistentDataType.INTEGER_ARRAY, new int[]{block.getX(), block.getY(), block.getZ()});
             }
         }
+    }
+
+    private static String getTickMessage(double rTicks, boolean comparator) {
+        double gTicks = rTicks * 2;
+        double seconds = gTicks/20;
+
+        return rTicks + "&a RT &8|&a " + gTicks + " GT &8|&a " + seconds + "&a seconds";
     }
 }

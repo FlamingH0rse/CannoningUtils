@@ -29,19 +29,24 @@ public class LeverCommand implements TabExecutor {
         World world = p.getWorld();
 
         int[] coords = (int[]) PlayerVar.getVar(p, "lever-loc", PersistentDataType.INTEGER_ARRAY);
+
+        // Check if previous lever data exists
         if (coords == null) {
             color.send(p, "&cNo lever history found.");
-            return false;
+            return true;
         }
 
+        // Check if lever block exists at the co-ordinates
         Block block = world.getBlockAt(coords[0], coords[1], coords[2]);
         if (block.getType() != Material.LEVER) {
             color.send(p, "&cThe flicked lever was removed.");
-            return false;
+            return true;
         }
 
+        // Toggle lever
         Powerable data = (Powerable) block.getBlockData();
         data.setPowered(!data.isPowered());
+        block.setBlockData(data);
 
         color.send(p, "&aLever switched!");
         return true;

@@ -18,7 +18,7 @@ public class PluginMain extends JavaPlugin {
         getCommand("button").setExecutor(new ButtonCommand(this));
         getCommand("lever").setExecutor(new LeverCommand(this));
         getCommand("sandwand").setExecutor(new SandwandCommand(this));
-
+        getCommand("pluginhelp").setExecutor(new PluginHelp());
 
         getServer().getPluginManager().registerEvents(new EntityExplodeListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);

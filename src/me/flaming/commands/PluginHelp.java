@@ -20,14 +20,14 @@ public class PluginHelp implements TabExecutor {
         Player p = (Player) sender;
 
         String m = """
-                &6========== &eCannoningUtils Help &6==========
+                &6========== &eMyPlugin Help &6==========
                 &a/help &f- &7Show this help message
                 &a/fire &f- &7Presses the last button
                 &a/lever start &f- &7Toggles last lever
                 &a/sandwand stop &f- &7Gives a sandwand that is used to clear sand stacks
                 &a/tntfill [radius] [amount] &f- &7Fills dispensers with TnT
                 &a/tntclear [radius] &f- &7Clears TnT from dispensers
-                &6===========================================
+                &6===================================
                 """;
 
         ColorUtils.send(p, m);

@@ -13,24 +13,24 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SandwandCommand implements TabExecutor {
+public class TickCounterCommand implements TabExecutor {
     private final PluginMain main;
-    public SandwandCommand(PluginMain main) {
+    public TickCounterCommand(PluginMain main) {
         this.main = main;
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
 
-        // Sandwand Item
-        ItemStack sandWandItem = new ItemStack(Material.BONE, 1);
+        // Tick-counter Item
+        ItemStack TCItem = new ItemStack(Material.BLAZE_ROD, 1);
 
-        NBTEditor.enchant(sandWandItem, Enchantment.ARROW_INFINITE, 1, true, true);
-        NBTEditor.rename(sandWandItem, "&e&l&oSAND WAND");
-        NBTEditor.set(sandWandItem, "custom-item-name", "sand-wand");
+        NBTEditor.enchant(TCItem, Enchantment.ARROW_INFINITE, 1, true, true);
+        NBTEditor.rename(TCItem, "&4&l&oTICK COUNTER");
+        NBTEditor.set(TCItem, "custom-item-name", "tick-counter");
 
         // Add item to inventory
-        p.getInventory().addItem(sandWandItem);
+        p.getInventory().addItem(TCItem);
         return true;
     }
 

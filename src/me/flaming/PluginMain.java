@@ -3,6 +3,7 @@ package me.flaming;
 import me.flaming.commands.*;
 import me.flaming.events.EntityExplodeListener;
 import me.flaming.events.PlayerInteractListener;
+import me.flaming.misc.UtilClass;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PluginMain extends JavaPlugin {
@@ -11,6 +12,8 @@ public class PluginMain extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+
+        UtilClass.init(this);
         saveDefaultConfig();
 
         getCommand("tntfill").setExecutor(new TntFillCommand(this));
@@ -18,7 +21,9 @@ public class PluginMain extends JavaPlugin {
         getCommand("button").setExecutor(new ButtonCommand(this));
         getCommand("lever").setExecutor(new LeverCommand(this));
         getCommand("sandwand").setExecutor(new SandwandCommand(this));
-        getCommand("pluginhelp").setExecutor(new PluginHelp());
+        getCommand("tickcounter").setExecutor(new TickCounterCommand(this));
+
+        getCommand("pluginhelp").setExecutor(new PluginHelp(this));
 
         getServer().getPluginManager().registerEvents(new EntityExplodeListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);

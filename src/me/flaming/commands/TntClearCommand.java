@@ -12,17 +12,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TntClearCommand implements TabExecutor {
     private final PluginMain main;
-    private final ColorUtils color;
     public TntClearCommand(PluginMain main) {
         this.main = main;
-        color = new ColorUtils();
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -58,7 +55,7 @@ public class TntClearCommand implements TabExecutor {
 
         // No dispensers found
         if (dispenserBlocks.size() == 0) {
-            color.send(p, "&4Found no dispensers to clear");
+            ColorUtils.send(p, "&4Found no dispensers to clear");
             return true;
         }
 
@@ -70,7 +67,7 @@ public class TntClearCommand implements TabExecutor {
             inv.clear();
         }
 
-        color.send(p, "&aCleared &6&l" + dispenserBlocks.size() + " &adispensers");
+        ColorUtils.send(p, "&aCleared &6&l" + dispenserBlocks.size() + " &adispensers");
         return true;
     }
 

@@ -1,6 +1,6 @@
 package me.flaming.utils;
 
-import me.flaming.PluginMain;
+import me.flaming.misc.UtilClass;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ColorUtils {
-    public PluginMain main = PluginMain.getPlugin();
+public class ColorUtils extends UtilClass {
     public static String getColored(String str) {
         String coloredStr = ChatColor.translateAlternateColorCodes('&', str);
 
@@ -20,11 +19,11 @@ public class ColorUtils {
 
         while (matches.find()) {
             String hexCode = "#" + matches.group().replaceAll("<##", "").replaceAll(">", "");
-            coloredStr = coloredStr.replaceAll(matches.group(), net.md_5.bungee.api.ChatColor.of(hexCode) + "");
+            coloredStr = coloredStr.replaceAll(matches.group(), net.md_5.bungee.api.ChatColor.of(hexCode).toString());
         }
         return coloredStr;
     }
-    public void send (Player player, String message) {
+    public static void send (Player player, String message) {
         String coloredStr = ChatColor.translateAlternateColorCodes('&', message);
 
         Pattern hexRegex = Pattern.compile("<##[a-zA-Z0-9]*>");
@@ -32,11 +31,11 @@ public class ColorUtils {
 
         while (matches.find()) {
             String hexCode = "#" + matches.group().replaceAll("<##", "").replaceAll(">", "");
-            coloredStr = coloredStr.replaceAll(matches.group(), net.md_5.bungee.api.ChatColor.of(hexCode) + "");
+            coloredStr = coloredStr.replaceAll(matches.group(), net.md_5.bungee.api.ChatColor.of(hexCode).toString());
         }
         player.sendMessage(coloredStr);
     }
-    public void send (Player player, String message, ChatMessageType type) {
+    public static void send (Player player, String message, ChatMessageType type) {
         String coloredStr = ChatColor.translateAlternateColorCodes('&', message);
 
         Pattern hexRegex = Pattern.compile("<##[a-zA-Z0-9]*>");
@@ -44,24 +43,26 @@ public class ColorUtils {
 
         while (matches.find()) {
             String hexCode = "#" + matches.group().replaceAll("<##", "").replaceAll(">", "");
-            coloredStr = coloredStr.replaceAll(matches.group(), net.md_5.bungee.api.ChatColor.of(hexCode) + "");
+            coloredStr = coloredStr.replaceAll(matches.group(), net.md_5.bungee.api.ChatColor.of(hexCode).toString());
         }
         player.spigot().sendMessage(type, TextComponent.fromLegacyText(coloredStr));
     }
-    public void sendLines (Player player, List<String> messages) {
+    public static void sendLines (Player player, List<String> messages) {
         for (String message : messages) {
             send(player, message);
         }
     }
-    public void sendLines (Player player, List<String> messages, ChatMessageType type) {
+    public static void sendLines (Player player, List<String> messages, ChatMessageType type) {
         for (String message : messages) {
             send(player, message, type);
         }
     }
-    public void log (String message) {
-        main.getLogger().info("");
+    public static void log (String message) {
+        main.getLogger().info(getColored(message));
     }
-    public void logLines (String message) {
-
+    public static void logLines (List<String> messages) {
+        for (String message : messages) {
+            log(message);
+        }
     }
 }

@@ -19,10 +19,8 @@ import java.util.List;
 
 public class TntFillCommand implements TabExecutor {
     private final PluginMain main;
-    private final ColorUtils color;
     public TntFillCommand(PluginMain main) {
         this.main = main;
-        color = new ColorUtils();
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args){
@@ -71,7 +69,7 @@ public class TntFillCommand implements TabExecutor {
         }
 
         if (dispenserBlocks.size() == 0) {
-            color.send(p, "&4Found no dispensers to fill");
+            ColorUtils.send(p, "&4Found no dispensers to fill");
             return true;
         }
         // Fill tnt
@@ -84,7 +82,7 @@ public class TntFillCommand implements TabExecutor {
             inv.addItem(itemStacks.toArray(ItemStack[]::new));
         }
 
-        color.send(p, "&aFilled &6&l" + dispenserBlocks.size() + " &adispensers with &6&l" + amount + " &aTNT");
+        ColorUtils.send(p, "&aFilled &6&l" + dispenserBlocks.size() + " &adispensers with &6&l" + amount + " &aTNT");
         return true;
     }
 

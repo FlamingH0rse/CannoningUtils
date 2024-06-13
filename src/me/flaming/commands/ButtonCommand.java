@@ -19,28 +19,26 @@ import java.util.List;
 
 public class ButtonCommand implements TabExecutor {
     private final PluginMain main;
-    private final ColorUtils color;
     public ButtonCommand(PluginMain main) {
         this.main = main;
-        color = new ColorUtils();
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player p = (Player) sender;
         World world = p.getWorld();
 
-        int[] coords = (int[]) PlayerVar.getVar(p, "button-loc", PersistentDataType.INTEGER_ARRAY);
+        int[] coords = PlayerVar.get(p, "button-loc", PersistentDataType.INTEGER_ARRAY, new int[]{});
 
         // Check if previous button data exists
-        if (coords == null) {
-            color.send(p, "&cNo button history found.");
+        if (coords.length == 0) {
+            ColorUtils.send(p, "&cNo button history found.");
             return true;
         }
 
         // Check if button block exists at the co-ordinates
         Block block = world.getBlockAt(coords[0], coords[1], coords[2]);
         if (block.getType() == Material.LEVER || !(block.getBlockData() instanceof Switch)) {
-            color.send(p, "&cThe clicked button was removed.");
+            ColorUtils.send(p, "&cThe clicked button was removed.");
             return true;
         }
 
@@ -48,19 +46,17 @@ public class ButtonCommand implements TabExecutor {
         int ticksPressed = (block.getType() == Material.STONE_BUTTON) ? 20 : 30;
 
         Powerable data = (Powerable) block.getBlockData();
-        data.setPowered(!data.isPowered());
-        block.setBlockData(data);
+        data.setPowered(true); block.setBlockData(data);
 
         // Un-click button
         new BukkitRunnable() {
             @Override
             public void run() {
-                data.setPowered(!data.isPowered());
-                block.setBlockData(data);
+                data.setPowered(false); block.setBlockData(data);
             }
         }.runTaskLater(main, ticksPressed);
 
-        color.send(p, "&aFired!");
+        ColorUtils.send(p, "&aFired!");
         return true;
     }
 

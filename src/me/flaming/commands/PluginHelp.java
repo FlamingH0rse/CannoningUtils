@@ -20,7 +20,7 @@ public class PluginHelp implements TabExecutor {
         Player p = (Player) sender;
 
         String m = """
-                &6========== &eMyPlugin Help &6==========
+                &6====== &eCannoningUtils Help &6======
                 &a/help &f- &7Show this help message
                 &a/fire &f- &7Presses the last button
                 &a/lever start &f- &7Toggles last lever
